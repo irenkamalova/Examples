@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+class object {
+
+public:
+    int a;
+    char *p;
+    object() {
+        a = 0;
+        p = new char[1];
+        cout << "Constructor for " << a << endl;
+
+    }
+
+    object(int a) {
+        this->a = a;
+        p = new char[1];
+        cout << "Constructor for " << this->a << endl;
+    }
+
+    ~object() {
+        delete []p;
+        cout << "Destructor for " << a << endl;
+    }
+
+    //Copy-constructor
+    object(const object &obj) {
+
+        p = new char[1];
+        a = obj.a; // Don't forget to initialise all class-members
+        cout << "Copy-Constructor for " << a << endl;
+        strcpy(p, obj.p);
+    }
+
+};
+
+void func(object obj) { //if here is no & or in class no copy constructor, this program will be failed
+    obj.a = obj.a + 3;
+}
+
+int main() {
+    object ob;
+    object ob1(5);
+    func(ob); // if copy-constructor realised, you can't change your object here, you need use & for doing this
+    func(ob1);
+
+    return 0;
+}
