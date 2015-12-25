@@ -1,0 +1,95 @@
+#include <iostream>
+
+using namespace std;
+
+// Базовый класс для автомобилей разных типов
+class vehicle {
+        int num_wheels;
+        int range;
+        public:
+        vehicle(int w, int r) {
+            num_wheels = w;
+            range = r;
+        }
+    void showv() {
+        cout << "Число колес " << num_wheels << endl;
+        cout << "Грузоnодъемность " << range << endl;
+    }
+};
+
+enum motor {gas, electric, diesel};
+
+class motorized : virtual public vehicle {
+    enum motor mtr;
+public:
+    motorized (enum motor m, int w, int r) : vehicle (w, r) {
+            mtr = m;
+    }
+
+    void showm() {
+        cout << "Мотор: ";
+        switch (mtr) {
+            case gas:
+                cout << "На газе\n";
+            break;
+            case electric:
+                cout << "На электроэнергии\n";
+            break;
+            case diesel:
+                cout << "ДизельныйХn";
+            break;
+        }
+    }
+};
+
+class road_use: virtual public vehicle {
+    int passengers;
+public:
+    road_use(int p, int w, int r) : vehicle(w, r) {
+        passengers = p;
+    }
+
+    void showr() {
+        cout << "Пассажироемкость " << passengers << '\n';
+    }
+};
+
+enum steering {power, rack_pinion, manual};
+
+class car: public motorized, public road_use {
+public:
+    // !!!
+    // Important note: you have to involve base-class constructor here! :
+    // ...,  vehicle(w, r)
+    // !!!
+    car(steering s, const motor &m, int w, int r, int p) : motorized(m, w, r), road_use(p, w, r), vehicle(w, r) {
+    str = s;
+    }
+    void show() {
+        showv();
+        showr();
+        showm();
+        cout << "Уnравление: ";
+        switch(str) {
+            case power: cout << "Силовой nривод \n";
+                break;
+            case rack_pinion: cout << "Механический nривод \n";
+                break;
+            case manual: cout << "Ручной nривод \n";
+                break;
+        }
+
+    }
+private:
+    enum steering str;
+
+public:
+
+};
+
+int main() {
+
+    car car1(power, gas, 4, 500, 5);
+    car1.show();
+    return 0;
+}
