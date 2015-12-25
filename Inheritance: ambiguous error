@@ -1,0 +1,119 @@
+#include <iostream>
+
+using namespace std;
+
+class A {
+    int numberA;
+public:
+
+    A() {
+        numberA = 0;
+        cout << "Default constructor A" << endl;
+    }
+
+    A(int n) {
+        numberA = n;
+        cout << "Constructor A" << endl;
+    }
+
+    ~A() {
+        cout << "Destructor A " << numberA << endl;
+    }
+
+    void showA() {
+        cout << "A is " << numberA << endl;
+    };
+};
+
+class B1 : public A {
+    int numberB;
+public:
+
+    B1() {
+        numberB = 0;
+        cout << "Default constructor B1" << endl;
+    }
+
+    B1(int n) : A (n) {
+        numberB = n;
+        cout << "Construcor B1 to A 1" << endl;
+    }
+
+    B1(int nB, int nA) : A (nA) {
+        numberB = nB;
+        cout << "Construcor B1 to A 2" << endl;
+    }
+
+    ~B1() {
+        cout << "Destructor B1 " << numberB << endl;
+    }
+
+    void showB() {
+        cout << "B1 is " << numberB << endl;
+    };
+};
+
+class B2 : public A {
+    int numberB;
+public:
+
+    B2() {
+        numberB = 0;
+        cout << "Default constructor B2" << endl;
+    }
+
+    B2(int n) : A (n) {
+        numberB = n;
+        cout << "Construcor B2 to A 1" << endl;
+    }
+
+    B2(int nB, int nA) : A (nA) {
+        numberB = nB;
+        cout << "Construcor B2 to A 2" << endl;
+    }
+
+    ~B2() {
+        cout << "Destructor B2 " << numberB << endl;
+    }
+
+    void showB() {
+        cout << "B2 is " << numberB << endl;
+    };
+};
+
+class D : public B1, public B2 {
+    int numD;
+public:
+
+    D() {
+        numD = 0;
+        cout << "Default constructor D" << endl;
+    }
+
+    D(int n) : B1(n), B2(n) {
+        numD = n;
+        cout << "Construcor D to B 1" << endl;
+    }
+
+    D(int nD, int nB) : B1(nB), B2(nB) {
+        numD = nD;
+        cout << "Construcor D to B 2" << endl;
+    }
+
+    D(int nD, int nB, int nA) : B1(nB, nA), B2(nB, nA) {
+        numD = nD;
+        cout << "Construcor D to B 3" << endl;
+    }
+
+    ~D() {
+        cout << "Destructor D " << numD << endl;
+    }
+};
+
+int main() {
+
+    D object1;
+    object1.showA(); //error: request for member ‘showA’ is ambiguous
+
+    return 0;
+}
