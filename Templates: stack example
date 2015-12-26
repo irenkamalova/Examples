@@ -1,0 +1,78 @@
+#include <iostream>
+
+using namespace std;
+
+#define SIZE 10
+
+// Создание родового класса stack
+template<class StackType>
+class stack {
+    StackType stck[SIZE];
+// содержит стек
+    int tos;
+// индекс вершины стека
+public:
+    void init() { tos = 0; } // инициализация стека
+    void push(StackType ch); // помещает объект в стек
+    StackType pop();
+// выталкивает объект из стека
+};
+
+// Помещение объекта в стек
+template<class StackType>
+void stack<StackType>::push(StackType ob) {
+    if (tos == SIZE) {
+        cout << "Стек полон";
+        return;
+    }
+    stck[tos] = ob;
+    tos++;
+
+}
+
+
+template<class StackType>
+StackType stack<StackType>::pop() {
+    if (tos == 0) {
+        cout << "Стек пуст";
+        return 0; // возврат нуля при пустом стеке
+    }
+
+    tos--;
+    return stck[tos];
+}
+
+int main() {
+    // Демонстрация символьных стеков
+    stack<char> s1, s2; // создание двух стеков
+    int i;
+    // инициализация стеков
+    s1.init();
+    s2.init();
+    s1.push('a');
+    s2.push('x');
+    s1.push('b');
+    s2.push('y');
+    s1.push('c');
+    s2.push('z');
+    for (i = 0; i < 3; i++)
+        cout << "Из стека 1:" << s1.pop() << "\n";
+    for (i = 0; i < 3; i++)
+        cout << "Из стека 2:" << s2.pop() << "\n";
+    // Демонстрация стеков со значениями типа double
+    stack<double> dsl, ds2; // создание двух стеков
+    // инициализация стеков
+    dsl.init();
+    ds2.init();
+    dsl.push(1.1);
+    ds2.push(2.2);
+    dsl.push(3.3);
+    ds2.push(4.4);
+    dsl.push(5.5);
+    ds2.push(6.6);
+    for (i = 0; i < 3; i++)
+        cout << " Из стека 1:" << dsl.pop() << "\n";
+    for (i = 0; i < 3; i++)
+        cout << " Из стека 2:" << ds2.pop() << "\n";
+    return 0;
+}
