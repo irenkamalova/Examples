@@ -1,0 +1,74 @@
+#include <iostream>
+
+using namespace std;
+
+#define SIZE 10
+
+template<class QueueType>
+class queue {
+    QueueType _queue[SIZE];
+    int tos;
+public:
+    queue() { tos = 0;
+        for(int i = 0; i < (int)SIZE; i++) {
+            _queue[i] = 0;
+        }
+    }
+    ~queue() {}
+
+    int size() {
+        return tos;
+    }
+    void push(QueueType element) {
+        if( tos == SIZE ) {
+            cout << "Queue is over" << endl;
+            return;
+        }
+        _queue[tos] = element;
+        tos++;
+    }
+    QueueType pop() {
+        QueueType element = _queue[0];
+        tos--;
+        for(int i = 0; i < tos; i++) {
+            _queue[i] = _queue[i+1];
+        }
+        _queue[tos] = 0;
+        return element;
+    }
+    QueueType head() {
+        return _queue[0];
+    }
+    QueueType tale() {
+        int index = tos - 1;
+        return _queue[index];
+    }
+    bool empty() {
+        return tos == 0;
+    }
+
+    QueueType show(int i) {
+        return _queue[i];
+    }
+};
+
+int main() {
+    queue<int> queue1;
+    queue1.push(10);
+    queue1.push(20);
+    queue1.push(30);
+
+    cout << "Head is " << queue1.head() << endl;
+    cout << "Tale is " << queue1.tale() << endl;
+    queue1.pop();
+
+    cout << "Now head is " << queue1.head() << endl;
+    cout << "Now tale is " << queue1.tale() << endl;
+
+    cout << "Is empty? - " << boolalpha << queue1.empty() << endl;
+    queue1.pop();
+    queue1.pop();
+    cout << "Is empty? - " <<  boolalpha << queue1.empty() << endl;
+
+    return 0;
+}
